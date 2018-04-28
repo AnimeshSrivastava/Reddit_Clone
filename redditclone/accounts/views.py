@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 
@@ -23,6 +23,8 @@ def loginview(request):
         user = authenticate(username = request.POST['username'], password = request.POST['password'])
         if user is not None:
             login(request, user)
+            if request.POST['next'] is not None:
+                return redirect(request.POST['next'])
             return render(request, 'accounts/login.html', {'error':'Login successful'})
 
         else:
