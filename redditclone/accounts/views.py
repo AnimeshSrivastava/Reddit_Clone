@@ -23,7 +23,7 @@ def loginview(request):
         user = authenticate(username = request.POST['username'], password = request.POST['password'])
         if user is not None:
             login(request, user)
-            if request.POST['next'] is not None:
+            if 'next' in request.POST:
                 return redirect(request.POST['next'])
             return render(request, 'accounts/login.html', {'error':'Login successful'})
 
